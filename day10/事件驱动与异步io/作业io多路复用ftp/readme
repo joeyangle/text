@@ -1,0 +1,25 @@
+关于socket的详细情况
+参见http://blog.csdn.net/sight_/article/details/8138802
+
+一般构建socket过程
+1 sk = socket.socket()  #先建立一个实例
+2 sk.setblocking()   #设立是否阻塞
+3 address = (HOST,PORT)
+4 sk.bind(address)  #设立监视地址端口
+5 sk.listen()  #
+6 sk.accept()  #接受连接并返回（conn,address）
+7 通过conn执行一系列操作
+8 close  #关闭一个连接
+
+
+
+题目:IO多路复用版FTP
+
+需求:
+
+实现文件上传及下载功能
+支持多连接并发传文件
+使用select or selectors
+
+需测试，至少两客户端同时上传下载文件
+恩，挺简单的

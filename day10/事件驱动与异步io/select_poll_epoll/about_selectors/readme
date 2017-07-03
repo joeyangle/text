@@ -1,0 +1,12 @@
+对于selectors
+This module allows high-level and efficient I/O multiplexing,
+built upon the select module primitives. Users are encouraged
+to use this module instead, unless they want precise control
+over the OS-level primitives used.
+
+这个模块允许高层和高效的I / O多路复用,建立在原语的选择模块。
+鼓励用户使用这个模块相反,除非他们想要精确控制所使用的操作系统原语。
+
+默认epoll
+
+
