@@ -1,0 +1,29 @@
+原生MySQL的操作
+
+登录mysql
+    mysql -u username -p
+查看各数据集
+    show databases
+转到其中一个数据库
+    use databasename
+显示数据库中各表
+    show tables
+新建数据库并且按照utf-8编码
+    create database databasename charset utf8
+删除一个数据库
+    drop database databasename
+显示一个数据表的详细索引信息
+    show index from tablename
+    desc tablename
+新建一个数据表
+    create table tablename(
+    var1 int not null auto_increment, #整数型且递增
+    var2 char(32) not null, #字符型
+    var3 data, #日期格式
+    primary key (var1) #将var1作为主键
+    );
+在数据表中插入数据
+    insert into tablename (var1,var2,var3)
+    values
+    (1,2,3),
+    (4,5,6);
