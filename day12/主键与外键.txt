@@ -1,0 +1,90 @@
+
+# 关于主键 外键
+# 主键是什么，外键是什么？
+# 主键是一个数据表的“索引”主键一定是唯一的
+# 外键是用来保证维护数据库的完整性,通过外键约束关键表的删减。
+'''
+外键的作用：
+保持数据一致性，完整性，主要目的是控制存储在外键表中的数据。 使两张表形成关联，外键只能引用外表中的列的值！
+例如：
+a b 两个表
+a表中存有客户号，客户名称
+b表中存有每个客户的订单
+有了外键后
+你只能在确信b 表中没有客户x的订单后，才可以在a表中删除客户x
+建立外键的前提： 本表的列必须与外键类型相同(外键必须是外表主键)。
+指定主键关键字： foreign key(列名)
+引用外键关键字： references <外键表名>(外键列名)
+事件触发限制: on delete和on update , 可设参数cascade(跟随外键改动), restrict(限制外表中的外键改动),
+set Null(设空值）,set Default（设默认值）,[默认]no action
+
+
+
+当朋友问我外键的作用是什么时,我也愣了一下,平常都是在这么用,还没有真正的总结过,外分键的作用呢.下面,我总结了一下外键的作用:
+
+外键 (FK) 是用于建立和加强两个表数据之间的链接的一列或多列。通过将保存表中主键值的一列或多列添加到另一个表中，
+可创建两个表之间的链接。这个列就成为第二个表的外键。
+
+FOREIGN KEY 约束的主要目的是控制存储在外键表中的数据，但它还可以控制对主键表中数据的修改。例如，如果在 publishers 表中
+删除一个出版商，而这个出版商的 ID 在 titles 表中记录书的信息时使用了，则这两个表之间关联的完整性将被破坏，
+titles 表中该出版商的书籍因为与 publishers 表中的数据没有链接而变得孤立了。FOREIGN KEY 约束防止这种情况的发生。
+如果主键表中数据的更改使之与外键表中数据的链接失效，则这种更改是不能实现的，从而确保了引用完整性。如果试图删除主键表中
+的行或更改主键值，而该主键值与另一个表的 FOREIGN KEY 约束值相关，则该操作不可实现。若要成功更改或删除 FOREIGN KEY 
+约束的行，可以先在外键表中删除外键数据或更改外键数据，然后将外键链接到不同的主键数据上去。
+
+外键是用来控制数据库中数据的数据完整性的
+就是当你对一个表的数据进行操作
+和他有关联的一个或更多表的数据能够同时发生改变
+这就是外键的作用
+
+[精] 谈谈外键
+外键 (FK) 是用于建立和加强两个表数据之间的链接的一列或多列。通过将保存表中主键值的一列或多列添加到另一个表中，可
+创建两个表之间的链接。这个列就成为第二个表的外键。
+FOREIGN KEY 约束的主要目的是控制存储在外键表中的数据，但它还可以控制对主键表中数据的修改。例如，
+如果在 publishers 表中删除一个出版商，而这个出版商的 ID 在 titles 表中记录书的信息时使用了，则这两个表之间关联的
+完整性将被破坏，titles 表中该出版商的书籍因为与 publishers 表中的数据没有链接而变得孤立了。FOREIGN KEY 约束防止
+这种情况的发生。如果主键表中数据的更改使之与外键表中数据的链接失效，则这种更改是不能实现的，从而确保了引用完整性。
+如果试图删除主键表中的行或更改主键值，而该主键值与另一个表的 FOREIGN KEY 约束值相关，则该操作不可实现。
+若要成功更改或删除 FOREIGN KEY 约束的行，可以先在外键表中删除外键数据或更改外键数据，然后将外键链接到不同的主键数据上去。
+
+外键是用来控制数据库中数据的数据完整性的
+就是当你对一个表的数据进行操作
+和他有关联的一个或更多表的数据能够同时发生改变
+这就是外键的作用
+'''
+
+reference  参照
+constraint  约束
+
+此处建立了一个课程表及学生信息表
+学生信息表中的课程id作为外键与课程表关联
+假如课程表中不存在课程id则学生信息表中无法插入内容
+
+mysql> create table class(
+    -> id  int not null primary key,
+    -> name char(16));
+Query OK, 0 rows affected (0.02 sec)
+
+
+CREATE TABLE `student2` (
+  `id` int(11) NOT NULL,
+  `name` char(16) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_class_key` (`class_id`), #仅仅改一个名字而已，将class_id 更改为 fk_class_key
+  CONSTRAINT `fk_class_key` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`)
+);
+
+此时如果class 表中不存在id 1,student表也插入不了，这就叫外键约束
+mysql> insert into student2(id,name,class_id) values(1,'alex', 1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testdb`.`student2`, CONSTRAINT `fk_class_key` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`))
+
+mysql> insert into class(id,name) values(1,"linux");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student2(id,name,class_id) values(1,'alex', 1);
+Query OK, 1 row affected (0.00 sec)
+
+＃如果有student表中跟这个class表有关联的数据，你是不能删除class表中与其关联的纪录的
+mysql> delete from class where id =1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`testdb`.`student2`, CONSTRAINT `fk_class_key` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`))

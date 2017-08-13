@@ -3,7 +3,7 @@
 """
 __title__ = ''
 __author__ = 'joeya'
-__mtime__ = '2017/6/27'
+__mtime__ = '2017/8/9'
 # code is far away from bugs with the god animal protecting
     I love animals. They taste delicious.
               ┏┓      ┏┓
@@ -19,11 +19,6 @@ __mtime__ = '2017/6/27'
                   ┃┫┫  ┃┫┫
                   ┗┻┛  ┗┻┛
 """
-
-import pymysql as ps
-connect = ps.Connect(
-    user='root',
-    passwd='123456',
-    db='testdb',
-    charset='utf8'
-)
+'''
+创建订单类，对订单
+'''

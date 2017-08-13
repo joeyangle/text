@@ -27,3 +27,44 @@
     values
     (1,2,3),
     (4,5,6);
+显示数据表数据
+    select * from tablename;
+    select * from tablename limit num1 offset num2;    limit设定的num1显示数据的行数，offset设定的num2表明显示从哪一行开始
+    select * from tablename where var1 > var2;    匹配所有var1>var2的数据行
+    select * from tablename where var like "a%"    匹配所有变量var中a开头的数据行
+数据表的升序降序
+    select * from tablename order by var asc;   按升序进行显示，降序为desc
+数据表的分类显示
+    假定一个var中为有限个变量（一般为名义变量），那么如何查看各变量在数据表中的个数
+    通过group by 语句实现以上目的，同时为了输出数据表的美观，可以通过with rollup显示总数，并且coalesce来设置表格标签
+    select coalesce(var1,"总数"),sum(var2) as var2_count from tablename group by var1 with rollup;
+mysql 的 alter 命令用于数据表的修改
+    修改表名
+    alter table tablename1 rename to tablename2;
+    删除增加字段
+    alter table tablename drop var1;    从tablename删除var1字段
+    alter table tablename add var2 int(11) not null;    添加字段var2
+    修改字段名称及类型
+    alter table tablename change var1 var2 int not null;    将var1修改为var2
+    仅修改字段类型
+    alter table tablename modify var int not null default 0;
+    默认值的设定
+    后面跟上default 默认值 即可
+
+inner join、 left join、 right join 、 full join
+以上就是查看交集，两列数据的匹配情况
+    select * from a INNER JOIN b on a.a = b.b;
+    select a.*,b.*  from a,b where a.a = b.b;
+
+    select * from a LEFT JOIN b on a.a = b.b;
+
+    select * from a RIGHT JOIN b on a.a = b.b;
+
+    select * from a left join b on a.a = b.b UNION select * from a right join b on a.a = b.b;
+
+事务
+    mysql> begin； ＃开始一个事务
+    mysql> insert into a (a) values(555);
+    mysql>rollback; 回滚 ， 这样数据是不会写入的
+
+索引

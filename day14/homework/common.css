@@ -1,0 +1,28 @@
+.left{
+    float: left;
+    }
+    .right{
+    float: right
+    }
+.logo{
+    font-size: 10px;
+    font-weight: bold;
+    color:white;
+    line-height: 50px;
+    margin: 10px 10px;
+    }
+.header{
+    background-color: #DDDDDD;
+    height: 50px;
+    width: 100%;
+    }
+.leftpage{
+    background-color: #888888;
+    height: 200px;
+    width: 37%;
+    }
+.rightpage{
+    background-color: #00ff00;
+    height: 200px;
+    width: 62%;
+    }
